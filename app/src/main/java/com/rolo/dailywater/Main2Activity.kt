@@ -1,6 +1,7 @@
 package com.rolo.dailywater
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,10 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_main2.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,7 +43,9 @@ class Main2Activity : AppCompatActivity() {
             agregar()
         }
         floatingActionButton_Actualizar.setOnClickListener {
-            actualizar()
+            val myRef = database.getReference( "Registros").child(auth.currentUser?.uid!!)
+            myRef.removeValue()
+            Toast.makeText(this,"Se reinicio el conteo", Toast.LENGTH_SHORT).show()
         }
 
     }
